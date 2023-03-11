@@ -1,16 +1,16 @@
 extends CharacterBody2D
 
-@export var speed = 300
-@export var friction = 0.15
-@export var acceleration = 0.2
 @export var DASH_TIME = 10
 @export var DASH_SPEED = 10
 @export var DASH_COST = 80
+@export var BASE_SPEED = 300
+@export var SPRINT_SPEED = 500.0
+@export var BASE_STAMINA = 200
+@export var friction = 0.15
+@export var acceleration = 0.2
+@export var speed = 300
 
 var dashing = 0
-const BASE_SPEED = 300
-const SPRINT_SPEED = 500.0
-const BASE_STAMINA = 200
 var stamina = 200
 
 func get_input():
