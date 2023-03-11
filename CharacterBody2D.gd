@@ -6,6 +6,7 @@ extends CharacterBody2D
 @export var DASH_TIME = 10
 @export var DASH_SPEED = 10
 @export var DASH_COST = 80
+@export var DASH_LENGHT = 10
 
 var dashing = 0
 const BASE_SPEED = 300
@@ -46,7 +47,7 @@ func _physics_process(delta):
 	
 	if direction.length() > 0:
 		if dashing > 0:
-			velocity = velocity.lerp(direction.normalized() * speed * 5, acceleration * DASH_SPEED)
+			velocity = velocity.lerp(direction.normalized() * speed * DASH_LENGHT, acceleration * DASH_SPEED)
 		else:
 			velocity = velocity.lerp(direction.normalized() * speed, acceleration)
 	else:
