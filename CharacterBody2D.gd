@@ -4,6 +4,8 @@ extends CharacterBody2D
 @export var friction = 0.15
 @export var acceleration = 0.2
 @export var DASH_TIME = 10
+@export var DASH_SPEED = 10
+@export var DASH_COST = 80
 
 var dashing = 0
 const BASE_SPEED = 300
@@ -25,9 +27,9 @@ func get_input():
 
 
 func _input(event):
-	if Input.is_key_pressed(KEY_A) && dashing <= 0 && stamina > 50:
+	if Input.is_key_pressed(KEY_A) && dashing <= 0 && stamina > DASH_COST:
 		dashing = 1
-		stamina -= 50
+		stamina -= DASH_COST
 
 
 func _physics_process(delta):
@@ -44,7 +46,7 @@ func _physics_process(delta):
 	
 	if direction.length() > 0:
 		if dashing > 0:
-			velocity = velocity.lerp(direction.normalized() * speed * 5, acceleration * 5)
+			velocity = velocity.lerp(direction.normalized() * speed * 5, acceleration * DASH_SPEED)
 		else:
 			velocity = velocity.lerp(direction.normalized() * speed, acceleration)
 	else:
