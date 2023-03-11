@@ -3,6 +3,9 @@ extends CharacterBody2D
 @export var speed = 300
 @export var friction = 0.15
 @export var acceleration = 0.2
+@export var DASH_TIME = 10
+
+var dashing = 0
 const BASE_SPEED = 300
 const SPRINT_SPEED = 500.0
 const BASE_STAMINA = 200
@@ -20,6 +23,13 @@ func get_input():
 		input.y -= 1
 	return input
 
+
+func _input(event):
+	if Input.is_key_pressed(KEY_A) && dashing <= 0 && stamina > 50:
+		dashing = 1
+		stamina -= 50
+
+
 func _physics_process(delta):
 	var direction = get_input()
 	var sprint_pressed = false
@@ -33,10 +43,14 @@ func _physics_process(delta):
 		stamina += 1
 	
 	if direction.length() > 0:
-		velocity = velocity.lerp(direction.normalized() * speed, acceleration)
+		if dashing > 0:
+			velocity = velocity.lerp(direction.normalized() * speed * 5, acceleration * 5)
+		else:
+			velocity = velocity.lerp(direction.normalized() * speed, acceleration)
 	else:
 		velocity = velocity.lerp(Vector2.ZERO, friction)
 
+	dashing -= delta * DASH_TIME
 	print_debug("stamina: ", stamina)
 	var label = get_node("Stamina")
 	label.text = "Stamina: " + str(stamina)
